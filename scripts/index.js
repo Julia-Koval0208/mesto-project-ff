@@ -1,7 +1,7 @@
 const cardTemplate = document.querySelector("#card-template").content; // переменная хранящая темплейт
 const container = document.querySelector(".places__list"); // место куда добавляем
 
- //функция удаления карточек
+//функция удаления карточек
 function deleteCard(cardElement) {
   cardElement.remove();
 }
@@ -15,7 +15,7 @@ const createCard = (card, deleteCard) => {
   cardImage.src = card.link; // ссылка на картинку
   cardImage.alt = "На картинке изображено: " + card.name; // альт для каждой картинки
   cardElement.querySelector(".card__title").textContent = card.name; // тайтл
-  
+
   // Обработчик клика для кнопки удаления
   const buttonCardDelete = cardElement.querySelector(".card__delete-button"); // кнопка удаления
   buttonCardDelete.addEventListener("click", () => {
