@@ -1,13 +1,17 @@
+// создаю карточку, делаю копию контейнера и присваиваю все нужные значения
 const cardTemplate = document.querySelector("#card-template").content; // переменная хранящая темплейт
-const container = document.querySelector(".places__list"); // место куда добавляем
 
 //функция удаления карточек
-function deleteCard(cardElement) {
+export function deleteCard(cardElement) {
   cardElement.remove();
 }
+//функция для обработки лайка
+export function likeCard(cardElement) {
+  cardElement.classList.toggle("card__like-button_is-active"); // функция добавления лайка
+}
+
 // @todo: Функция создания карточки
-// создаю карточку, делаю копию контейнера и присваиваю все нужные значения
-const createCard = (card, deleteCard) => {
+export const createCard = (card, likeCard, deleteCard, wiewImage) => {
   const cardElement = cardTemplate
     .querySelector(".places__item")
     .cloneNode(true); //копия блока с его содержимым
@@ -22,16 +26,14 @@ const createCard = (card, deleteCard) => {
     deleteCard(cardElement); // вызываем функцию удаления
   });
 
+  const buttonLikeCard = cardElement.querySelector(".card__like-button");
+  buttonLikeCard.addEventListener("click", (evt) => {
+    likeCard(evt.target);
+  });
+
+  cardImage.addEventListener("click", () => {
+    wiewImage(card);
+  });
+
   return cardElement; // возврат новых значений
 };
-
-// @todo: Вывести карточки на страницу
-const addCard = (cardElement, container) => {
-  container.append(cardElement);
-};
-
-//функция чтобы пройтись по всему массиву
-initialCards.forEach((card) => {
-  const newCard = createCard(card, deleteCard); //переменная где лежит функция с карточкой
-  addCard(newCard, container); // вызов функции создании карточки, 1 арг- карточки, 2-куда
-});
