@@ -14,6 +14,7 @@ module.exports = {
   },
 
   mode: "development", // добавили режим разработчика
+  devtool: "source-map", // добавлено свойство для генерации исходных карт
   devServer: {
     static: path.resolve(__dirname, "./dist"), // путь, куда "смотрит" режим разработчика
     compress: true, // это ускорит загрузку в режиме разработки
