@@ -3,9 +3,24 @@ import "./pages/index.css";
 import { initialCards } from "./scripts/cards";
 import { createCard, deleteCard, likeCard } from "./scripts/card";
 
-import { wiewImage, removeClass, newCard } from "./scripts/modal";
+import { openPopup, wiewImage, closePopup } from "./scripts/modal";
 
 const container = document.querySelector(".places__list"); // место куда добавляем
+const editButton = document.querySelector(".profile__edit-button"); // кнопка редактирования профиля
+const popupEdit = document.querySelector(".popup_type_edit"); // попап редактирования профиля
+const profileButton = document.querySelector(".profile__add-button"); // кнопка добавления новой карточки
+//форма карточек
+const newCardsForm = document.forms.new_place;
+const namePlace = newCardsForm.elements.place_name;
+const linkCard = newCardsForm.elements.link;
+//форма профиля
+const profileForm = document.forms.edit_profile;
+const nameInput = profileForm.elements.name;
+const jobInput = profileForm.elements.description;
+
+const nameElement = document.querySelector(".profile__title");
+const jobElement = document.querySelector(".profile__description");
+const newCard = document.querySelector(".popup_type_new-card"); // попап добавления новой карточки
 
 // @todo: Вывести карточки на страницу
 const addCard = (cardElement, container) => {
@@ -18,23 +33,18 @@ initialCards.forEach((card) => {
   addCard(newCard, container); // вызов функции создании карточки, 1 арг- карточки, 2-куда
 });
 
-// Находим форму
-const formElement = document.forms.edit_profile;
-
-// Находим поля формы
-const nameInput = formElement.elements.name;
-const jobInput = formElement.elements.description;
-
-const nameElement = document.querySelector(".profile__title");
-const jobElement = document.querySelector(".profile__description");
-
-export function fillFormWithProfileData() {
+function fillFormWithProfileData() {
   nameInput.value = nameElement.textContent; // Заполняем поле имени
   jobInput.value = jobElement.textContent; // Заполняем поле описания
 }
 
+editButton.addEventListener("click", () => {
+  fillFormWithProfileData(); //заполнение полей
+  openPopup(popupEdit);
+});
+
 // Обработчик «отправки» формы
-function handleFormSubmit(evt) {
+function handleProfileButton(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
   // Получите значение полей jobInput и nameInput из свойства value
@@ -44,20 +54,20 @@ function handleFormSubmit(evt) {
   // Вставьте новые значения с помощью textContent
   nameElement.textContent = nameValue;
   jobElement.textContent = jobValue;
+
+  closePopup(popupEdit);
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener("submit", handleFormSubmit);
+profileForm.addEventListener("submit", handleProfileButton);
 
-const formElementCard = document.forms.new_place;
-const namePlace = formElementCard.elements.place_name;
-const linkCard = formElementCard.elements.link;
+profileButton.addEventListener("click", () => openPopup(newCard));
 
 // Обработчик «отправки» формы
 function handleCardSubmit(
   evt,
-  formElementCard,
+  newCardsForm,
   container,
   createCard,
   deleteCard,
@@ -78,17 +88,17 @@ function handleCardSubmit(
   container.prepend(newCards);
 
   // закрытие попапа
-  removeClass(newCard);
+  closePopup(newCard);
 
   // Сброс формы
-  formElementCard.reset();
+  newCardsForm.reset();
 }
 
 // Добавляем обработчик события submit и передаем необходимые аргументы
-formElementCard.addEventListener("submit", (evt) =>
+newCardsForm.addEventListener("submit", (evt) =>
   handleCardSubmit(
     evt,
-    formElementCard,
+    newCardsForm,
     container,
     createCard,
     deleteCard,
