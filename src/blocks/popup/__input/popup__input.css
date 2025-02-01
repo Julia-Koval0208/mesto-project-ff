@@ -10,8 +10,15 @@
   margin-bottom: 10px;
 }
 
-.popup__input:last-of-type {
-  margin-bottom: 0;
+.label-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.label-input:last-of-type {
+  margin-bottom: 0px;
 }
 
 @media screen and (max-width: 568px) {
