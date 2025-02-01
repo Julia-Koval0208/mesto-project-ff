@@ -62,7 +62,7 @@ export const createCard = (card, userID, likeCard, deleteCard, wiewImage) => {
     likeCard(evt.target, card, likeCount); // Вызываем функцию обработки лайка
   });
 
-  let likeCount = cardElement.querySelector(".card__like-counter");
+  const likeCount = cardElement.querySelector(".card__like-counter");
   if (Array.isArray(card.likes) && card.likes.length > 0) {
     likeCount.textContent = card.likes.length; // Если есть лайки, отображаем их количество
     buttonLikeCard.classList.toggle(

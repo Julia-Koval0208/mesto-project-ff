@@ -15,9 +15,6 @@ const handleResponse = (res) => {
   Если ответ неудачный (res.ok равно false), выбрасывается ошибка, и управление передается в блок catch*/
 };
 
-const handleError = (error) => {
-  console.error("Ошибка запроса", error);
-};
 
 const fetchApi = (url, method = "GET", body = null) => {
   const options = {
@@ -29,7 +26,7 @@ const fetchApi = (url, method = "GET", body = null) => {
     options.body = JSON.stringify(body);
   }
 
-  return fetch(url, options).then(handleResponse).catch(handleError);
+  return fetch(url, options).then(handleResponse)
 };
 
 export const fetchUserData = () => fetchApi(`${config.baseUrl}/users/me`);

@@ -110,8 +110,7 @@ editButton.addEventListener("click", () => {
 // Обработчик «отправки» формы
 function handleProfileButton(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  const profileButton = popupEdit.querySelector(".popup__button"); // Локальная переменная для кнопки
-  profileButton.textContent = "Сохранение...";
+  evt.submitter.textContent = "Сохранение...";
 
   const nameValue = nameInput.value;
   const jobValue = jobInput.value;
@@ -121,13 +120,12 @@ function handleProfileButton(evt) {
       nameElement.textContent = data.name;
       jobElement.textContent = data.about;
       console.log("Профиль обновлен:", data);
-      profileButton.textContent = "Сохранить";
       closePopup(popupEdit);
     })
     .catch((error) => {
-      profileButton.textContent = "Сохранить";
       console.error("Ошибка при обновлении профиля:", error);
-    });
+    })
+    .finally(() => (evt.submitter.textContent = "Сохранить"));
 }
 
 // Прикрепляем обработчик к форме:
@@ -142,8 +140,7 @@ profileButton.addEventListener("click", () => {
 // Обработчик «отправки» формы
 function handleCardSubmit(evt) {
   evt.preventDefault(); // Сброс дефолтных настроек
-  const cardButton = newCard.querySelector(".popup__button"); // Локальная переменная для кнопки
-  cardButton.textContent = "Сохранение...";
+  evt.submitter.textContent = "Сохранение...";
 
   const newCardData = {
     name: namePlace.value,
@@ -156,13 +153,12 @@ function handleCardSubmit(evt) {
       container.prepend(newCards);
       closePopup(newCard);
       newCardsForm.reset();
-      cardButton.textContent = "Сохранить"; // Вернуть текст кнопки
       console.log(res);
     })
     .catch((error) => {
-      cardButton.textContent = "Сохранить"; // Вернуть текст кнопки в случае ошибки
       console.error("Ошибка при добавлении новой карточки:", error);
-    });
+    })
+    .finally(() => (evt.submitter.textContent = "Сохранить"));
 }
 
 // Добавляем обработчик события submit и передаем необходимые аргументы
@@ -180,8 +176,7 @@ newCardsForm.addEventListener("submit", (evt) =>
 
 const handleAvatarSubmit = (evt) => {
   evt.preventDefault();
-  const avatarButton = popupAvatar.querySelector(".popup__button"); // Локальная переменная для кнопки
-  avatarButton.textContent = "Сохранение...";
+  evt.submitter.textContent = "Сохранение...";
 
   const avatarValue = inputAvatar.value;
 
@@ -189,14 +184,14 @@ const handleAvatarSubmit = (evt) => {
     .then((res) => {
       loadData();
       console.log("Замена аватара успешна:", res);
-      avatarButton.textContent = "Сохранить"; // Вернуть текст кнопки
+
       closePopup(popupAvatar);
       formAvatar.reset();
     })
     .catch((er) => {
-      avatarButton.textContent = "Сохранить"; // Вернуть текст кнопки в случае ошибки
       console.log("Произошла ошибка в замене аватара:", er);
-    });
+    })
+    .finally(() => (evt.submitter.textContent = "Сохранить"));
 };
 
 formAvatar.addEventListener("submit", handleAvatarSubmit);
