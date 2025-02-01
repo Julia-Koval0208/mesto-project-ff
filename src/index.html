@@ -83,6 +83,7 @@
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Новое место</h3>
           <form class="popup__form" name="new_place" novalidate>
+            <label class="label-input">
             <input
               type="text"
               name="place_name"
@@ -94,6 +95,8 @@
               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <span class="form__input-error card-input-error"></span>
+          </label>
+          <label class="label-input">
             <input
               type="url"
               name="link"
@@ -103,6 +106,7 @@
               id="link-input"
             />
             <span class="form__input-error link-input-error"></span>
+          </label>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
